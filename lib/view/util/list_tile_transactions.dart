@@ -39,7 +39,7 @@ class ListTileTransaction extends StatelessWidget {
         children: [
           Text(data, style: AppTextStyles.listTileTransactionsData),
           Text(
-            (isDebit) ? '-${value.toString()}' : '+${value.toString()}',
+            (isDebit) ? (value * -1).toString() : value.toString(),
             style: (isDebit) ? AppTextStyles.listTileTransactionsValueDebit : AppTextStyles.listTileTransactionsValueCredit,
           ),
         ],

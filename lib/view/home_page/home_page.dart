@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:wallet_crud/core/theme/app_icons.dart';
-import 'package:wallet_crud/view/util/modal_sheet_views/modal_bottom_sheet_view.dart';
 
 import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../modal_sheet_views/modal_bottom_sheet_view.dart';
 import '../util/card_model.dart';
 import '../util/list_tile_transactions.dart';
 
@@ -12,13 +12,15 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final PageController pCardsController = PageController(viewportFraction: 0.9);
+  final GlobalKey _scaffold = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffold,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => modalBottomSheetView(context),
+        onPressed: () => modalBottomSheetView(_scaffold.currentContext!),
         backgroundColor: AppColors.baseColor200,
         child: const Icon(Icons.add),
       ),
@@ -99,10 +101,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
 
+              //transactions
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: ListView(
+                    physics: const BouncingScrollPhysics(),
                     children: const [
                       ListTileTransaction(
                         title: 'Food',
@@ -119,7 +123,47 @@ class HomePage extends StatelessWidget {
                         iconPath: AppIcons.dinnerIcon,
                         data: '12/08/22',
                         isDebit: true,
-                      )
+                      ),
+                      ListTileTransaction(
+                        title: 'Transport',
+                        description: 'Onibus',
+                        value: 24,
+                        iconPath: AppIcons.dinnerIcon,
+                        data: '13/08/22',
+                        isDebit: true,
+                      ),
+                      ListTileTransaction(
+                        title: 'Deposit',
+                        description: 'Bank',
+                        value: 90,
+                        iconPath: AppIcons.dinnerIcon,
+                        data: '13/08/22',
+                        isDebit: false,
+                      ),
+                      ListTileTransaction(
+                        title: 'Deposit',
+                        description: 'Bank',
+                        value: 90,
+                        iconPath: AppIcons.dinnerIcon,
+                        data: '13/08/22',
+                        isDebit: false,
+                      ),
+                      ListTileTransaction(
+                        title: 'Deposit',
+                        description: 'Bank',
+                        value: 90,
+                        iconPath: AppIcons.dinnerIcon,
+                        data: '13/08/22',
+                        isDebit: false,
+                      ),
+                      ListTileTransaction(
+                        title: 'Deposit',
+                        description: 'Bank',
+                        value: 90,
+                        iconPath: AppIcons.dinnerIcon,
+                        data: '13/08/22',
+                        isDebit: false,
+                      ),
                     ],
                   ),
                 ),
