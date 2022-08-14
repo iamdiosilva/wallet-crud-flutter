@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../database/supabase_handler.dart';
+import '../../models/enum/e_transaction_category.dart';
 
 customAlertDialog({required BuildContext context, String? value}) {
+  SupabaseHandler supabaseHandler = SupabaseHandler();
+
   AlertDialog dialog = AlertDialog(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
@@ -60,7 +64,18 @@ customAlertDialog({required BuildContext context, String? value}) {
           ),
         ),
         child: Text('Confirm', style: AppTextStyles.alertDialogTextButton),
-        onPressed: () {
+        onPressed: () async {
+          //await supabaseHandler.addData(double.parse(value!));
+          await supabaseHandler.addData(
+            1,
+            ETransactionCategory.food.name,
+            'Bejinha Credito',
+            double.parse(value!),
+            false,
+            DateTime.now().toIso8601String(),
+            AppIcons.foodIcon,
+          );
+          print(DateTime.now());
           Navigator.pop(context);
         },
       ),

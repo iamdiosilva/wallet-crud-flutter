@@ -8,7 +8,7 @@ class ListTileTransaction extends StatelessWidget {
   final String title;
   final String description;
   final String data;
-  final double value;
+  final double amount;
   final bool isDebit;
 
   const ListTileTransaction({
@@ -17,7 +17,7 @@ class ListTileTransaction extends StatelessWidget {
     required this.title,
     required this.description,
     required this.data,
-    required this.value,
+    required this.amount,
     required this.isDebit,
   }) : super(key: key);
 
@@ -32,14 +32,19 @@ class ListTileTransaction extends StatelessWidget {
           child: Image.asset(iconPath),
         ),
       ),
-      title: Text(title, style: AppTextStyles.listTileTransactions),
+      title: Row(
+        children: [
+          //Text('(debit) ', style: AppTextStyles.listTileTitle.copyWith(color: Colors.red)),
+          Text(title, style: AppTextStyles.listTileTransactions),
+        ],
+      ),
       subtitle: Text(description, style: AppTextStyles.listTileTransactions),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(data, style: AppTextStyles.listTileTransactionsData),
           Text(
-            (isDebit) ? (value * -1).toString() : value.toString(),
+            (isDebit) ? (amount * -1).toString() : amount.toString(),
             style: (isDebit) ? AppTextStyles.listTileTransactionsValueDebit : AppTextStyles.listTileTransactionsValueCredit,
           ),
         ],

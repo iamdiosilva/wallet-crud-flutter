@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
   final PageController pCardsController = PageController(viewportFraction: 0.9);
+
   final GlobalKey _scaffold = GlobalKey();
 
   @override
@@ -67,9 +68,6 @@ class HomePage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   children: const [
                     CardModel(
-                      color: Colors.purple,
-                    ),
-                    CardModel(
                       color: Colors.red,
                     ),
                   ],
@@ -78,7 +76,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 10),
               SmoothPageIndicator(
                 controller: pCardsController,
-                count: 2,
+                count: 1,
                 effect: ExpandingDotsEffect(
                   dotColor: AppColors.baseColor300,
                   activeDotColor: AppColors.baseColor200,
@@ -111,7 +109,7 @@ class HomePage extends StatelessWidget {
                       ListTileTransaction(
                         title: 'Food',
                         description: 'Venda da Dona Bahiana',
-                        value: 15,
+                        amount: 15,
                         iconPath: AppIcons.dinnerIcon,
                         data: '12/08/22',
                         isDebit: false,
@@ -119,7 +117,7 @@ class HomePage extends StatelessWidget {
                       ListTileTransaction(
                         title: 'Food',
                         description: 'Venda da Dona Bahiana',
-                        value: 24,
+                        amount: 24,
                         iconPath: AppIcons.dinnerIcon,
                         data: '12/08/22',
                         isDebit: true,
@@ -127,7 +125,7 @@ class HomePage extends StatelessWidget {
                       ListTileTransaction(
                         title: 'Transport',
                         description: 'Onibus',
-                        value: 24,
+                        amount: 24,
                         iconPath: AppIcons.dinnerIcon,
                         data: '13/08/22',
                         isDebit: true,
@@ -135,7 +133,7 @@ class HomePage extends StatelessWidget {
                       ListTileTransaction(
                         title: 'Deposit',
                         description: 'Bank',
-                        value: 90,
+                        amount: 90,
                         iconPath: AppIcons.dinnerIcon,
                         data: '13/08/22',
                         isDebit: false,
@@ -143,7 +141,7 @@ class HomePage extends StatelessWidget {
                       ListTileTransaction(
                         title: 'Deposit',
                         description: 'Bank',
-                        value: 90,
+                        amount: 90,
                         iconPath: AppIcons.dinnerIcon,
                         data: '13/08/22',
                         isDebit: false,
@@ -151,7 +149,7 @@ class HomePage extends StatelessWidget {
                       ListTileTransaction(
                         title: 'Deposit',
                         description: 'Bank',
-                        value: 90,
+                        amount: 90,
                         iconPath: AppIcons.dinnerIcon,
                         data: '13/08/22',
                         isDebit: false,
@@ -159,7 +157,7 @@ class HomePage extends StatelessWidget {
                       ListTileTransaction(
                         title: 'Deposit',
                         description: 'Bank',
-                        value: 90,
+                        amount: 90,
                         iconPath: AppIcons.dinnerIcon,
                         data: '13/08/22',
                         isDebit: false,
