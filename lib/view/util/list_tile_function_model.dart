@@ -5,6 +5,7 @@ import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_text_styles.dart';
 
+// ignore: must_be_immutable
 class ListTileFunctionModel extends StatelessWidget {
   final String imagePath;
   final String title;

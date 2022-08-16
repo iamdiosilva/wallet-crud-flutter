@@ -1,3 +1,4 @@
 enum ETransactionCategory {
+  deposit,
   food,
 }

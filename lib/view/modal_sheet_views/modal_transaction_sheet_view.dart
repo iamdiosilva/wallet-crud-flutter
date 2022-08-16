@@ -14,30 +14,33 @@ modalTransactionSheetView(BuildContext context, Widget page) {
         top: Radius.circular(20),
       ),
     ),
-    builder: (context) => DraggableScrollableSheet(
-      expand: false,
-      minChildSize: 0.2,
-      initialChildSize: 0.4,
-      maxChildSize: 0.6,
-      builder: (context, scrollController) {
-        return NotificationListener<OverscrollIndicatorNotification>(
-          onNotification: (OverscrollIndicatorNotification overscroll) {
-            overscroll.disallowIndicator();
-            return true;
-          },
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
-              children: [
-                const SizedBox(height: 5),
-                const DraggableIndicator(),
-                const SizedBox(height: 10),
-                page,
-              ],
+    builder: (context) => Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: DraggableScrollableSheet(
+        expand: false,
+        minChildSize: 0.2,
+        initialChildSize: 0.4,
+        maxChildSize: 0.6,
+        builder: (context, scrollController) {
+          return NotificationListener<OverscrollIndicatorNotification>(
+            onNotification: (OverscrollIndicatorNotification overscroll) {
+              overscroll.disallowIndicator();
+              return true;
+            },
+            child: SingleChildScrollView(
+              controller: scrollController,
+              child: Column(
+                children: [
+                  const SizedBox(height: 5),
+                  const DraggableIndicator(),
+                  const SizedBox(height: 10),
+                  page,
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     ),
   );
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wallet_crud/core/theme/app_colors.dart';
-import 'package:wallet_crud/core/theme/app_icons.dart';
+import 'package:wallet_crud/models/transaction_model.dart';
 
 import '../../../../core/theme/app_text_styles.dart';
-import '../../util/custom_alert_dialog.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_icons.dart';
+import '../../../models/enum/e_transaction_category.dart';
+import '../../../models/enum/e_transaction_type.dart';
+import '../../util/alerts_dialog/deposit_confirmation_alert.dart';
 
 class DepositPage extends StatelessWidget {
   const DepositPage({Key? key, required this.homeContext}) : super(key: key);
@@ -13,6 +16,7 @@ class DepositPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController amountController = TextEditingController();
+    TextEditingController descriptionController = TextEditingController();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Column(
@@ -29,6 +33,8 @@ class DepositPage extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
+
+          //deposit amount form field
           Form(
             child: TextFormField(
               controller: amountController,
@@ -40,6 +46,44 @@ class DepositPage extends StatelessWidget {
                 ),
                 labelText: 'Amount',
                 labelStyle: AppTextStyles.textFormLabel,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.white38,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.white70,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              style: TextStyle(
+                color: AppColors.white70,
+                fontSize: 18,
+              ),
+            ),
+          ),
+          const SizedBox(height: 25),
+
+          //description form field
+          Form(
+            child: TextFormField(
+              controller: descriptionController,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: 'Description',
+                labelStyle: AppTextStyles.textFormLabel,
+                prefixIcon: Icon(
+                  Icons.description,
+                  color: AppColors.white38,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -83,13 +127,24 @@ class DepositPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 20),
+
+              //deposit transaction function is called here
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    customAlertDialog(
-                      context: homeContext,
-                      value: amountController.text,
+                    TransactionModel deposit = TransactionModel(
+                      id: 1,
+                      category: ETransactionCategory.deposit.name,
+                      amount: double.parse(amountController.text),
+                      description: descriptionController.text,
+                      type: ETransactionType.credit.name,
+                      transactionDate: DateTime.now(),
+                      iconPath: 'IconPath',
+                    );
+                    depositConfirmationAlert(
+                      homeContext: homeContext,
+                      transaction: deposit,
                     );
                   },
                   style: ElevatedButton.styleFrom(

@@ -1,5 +1,6 @@
 const String pngIconsPath = 'assets/icons/png/';
 const String svgIconsPath = 'assets/icons/svg/';
+const String lottieAnimationPath = 'assets/icons/lottie/';
 
 class AppIcons {
   static const chartIcon = '${pngIconsPath}chart2.png';
@@ -14,9 +15,11 @@ class AppIcons {
   static const pay = '${pngIconsPath}pay.png';
   static const deposit = '${pngIconsPath}deposit.png';
 
+  static const waitingServer = '${pngIconsPath}wating_server.png';
+
   static const businessman = '${pngIconsPath}businessman.png';
 
-  static const dragIndicator = '${pngIconsPath}drag_indicator.png';
-
   static const svgArrowUp = '${svgIconsPath}arrow_up.svg';
+
+  static const lottieLoading = '${lottieAnimationPath}loading.json';
 }

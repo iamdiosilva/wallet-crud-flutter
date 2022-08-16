@@ -22,4 +22,8 @@ class AppColors {
 
   static Color confirmButton = const Color(0xff2BC48A);
   static Color cancelButton = Colors.red;
+
+  static Color warning = const Color(0xffffcc00);
+  static Color error = const Color(0xffff3333);
+  static Color success = const Color(0xff2BC48A);
 }
