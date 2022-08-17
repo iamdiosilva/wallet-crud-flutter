@@ -5,7 +5,6 @@ const String lottieAnimationPath = 'assets/icons/lottie/';
 class AppIcons {
   static const chartIcon = '${pngIconsPath}chart2.png';
   static const helpIcon = '${pngIconsPath}help.png';
-  static const foodIcon = '${pngIconsPath}chicken_leg.png';
   static const dinnerIcon = '${pngIconsPath}dinner.png';
   static const cashFlow = '${pngIconsPath}cash_flow.png';
   static const cashIncoming = '${pngIconsPath}cash_income.png';
@@ -16,6 +15,9 @@ class AppIcons {
   static const deposit = '${pngIconsPath}deposit.png';
 
   static const waitingServer = '${pngIconsPath}wating_server.png';
+  static const warning = '${pngIconsPath}exclamation.png';
+  static const wrong = '${pngIconsPath}wrong.png';
+  static const check = '${pngIconsPath}check.png';
 
   static const businessman = '${pngIconsPath}businessman.png';
 

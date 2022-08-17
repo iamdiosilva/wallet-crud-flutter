@@ -19,8 +19,9 @@ depositConfirmationAlert({
       scaffoldContext: alertDialogContext,
       color: AppColors.warning,
       durationMilliseconds: 1000,
-      leadingImagePath: AppIcons.waitingServer,
-      trailingLottiePath: AppIcons.lottieLoading,
+      title: 'Requesting server',
+      subtitle: 'Comunicating with server',
+      trailingImagePath: AppIcons.warning,
     );
 
     SupabaseHandler supabaseHandler = SupabaseHandler();
@@ -42,16 +43,18 @@ depositConfirmationAlert({
         scaffoldContext: homeContext,
         color: AppColors.error,
         durationMilliseconds: 3000,
-        leadingImagePath: AppIcons.waitingServer,
-        trailingLottiePath: AppIcons.lottieLoading,
+        title: 'Comunication error',
+        subtitle: error.toString(),
+        trailingImagePath: AppIcons.wrong,
       );
     } else {
       showCustomSnackbar(
         scaffoldContext: homeContext,
         color: AppColors.success,
         durationMilliseconds: 3000,
-        leadingImagePath: AppIcons.waitingServer,
-        trailingLottiePath: AppIcons.lottieLoading,
+        title: 'Transaction confirmed',
+        subtitle: 'Transaction was successfully confirmed',
+        trailingImagePath: AppIcons.check,
       );
     }
   }

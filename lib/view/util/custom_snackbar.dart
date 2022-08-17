@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
-import '../../core/theme/app_icons.dart';
+import '../../core/theme/app_colors.dart';
+import '../../core/theme/app_text_styles.dart';
 
 showCustomSnackbar({
   required BuildContext scaffoldContext,
   required Color color,
   required int durationMilliseconds,
-  required String leadingImagePath,
-  required String trailingLottiePath,
+  required String title,
+  required String subtitle,
+  required String trailingImagePath,
 }) {
   ScaffoldMessenger.of(scaffoldContext).showSnackBar(
     SnackBar(
@@ -19,22 +20,59 @@ showCustomSnackbar({
         alignment: Alignment.center,
         height: 70,
         decoration: BoxDecoration(
-          color: color,
+          color: AppColors.baseColor200,
           borderRadius: BorderRadius.circular(10),
         ),
-        child: ListTile(
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              leadingImagePath,
-              width: 45,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 25,
+                  decoration: BoxDecoration(
+                    color: color,
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      bottomLeft: Radius.circular(10),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 12),
+                  child: Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: AppTextStyles.listTileTitle,
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(scaffoldContext).size.width * 0.6,
+                            child: Text(
+                              subtitle,
+                              style: AppTextStyles.listTileSubtitle,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
-          ),
-          title: Text('Title'),
-          subtitle: Text('Subtitle'),
-          trailing: Lottie.asset(
-            trailingLottiePath,
-          ),
+            Padding(
+              padding: const EdgeInsets.only(left: 12, right: 12),
+              child: Image.asset(
+                trailingImagePath,
+                width: 45,
+              ),
+            ),
+          ],
         ),
       ),
     ),
