@@ -25,7 +25,7 @@ depositConfirmationAlert({
     );
 
     SupabaseHandler supabaseHandler = SupabaseHandler();
-    final response = await supabaseHandler.depositFunction(
+    final response = await supabaseHandler.depositHandler(
       id: transaction.id!,
       description: transaction.description!,
       category: transaction.category,

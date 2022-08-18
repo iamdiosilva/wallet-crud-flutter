@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_page/home_page.dart';
+import 'login_page/login_page.dart';
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
@@ -14,7 +14,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
