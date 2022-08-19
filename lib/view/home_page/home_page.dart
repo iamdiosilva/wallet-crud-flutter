@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../repositories/user_repository.dart';
 import '../modal_sheet_views/modal_bottom_sheet_view.dart';
 import '../util/card_model.dart';
 import '../util/list_tile_transactions.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
+
+  late UserRepository _userRepository;
 
   final PageController pCardsController = PageController(viewportFraction: 0.9);
 
@@ -17,6 +22,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _userRepository = context.watch<UserRepository>();
     return Scaffold(
       key: _scaffold,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -49,7 +55,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text('My ', style: AppTextStyles.homeLabelBold),
+                        Text('${_userRepository.user.nickname} ', style: AppTextStyles.homeLabelBold),
                         Text('Wallet', style: AppTextStyles.homeLabel),
                       ],
                     ),
