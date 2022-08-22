@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:wallet_crud/models/transaction.dart';
 
+import '../../controller/home_page_controller.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_icons.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../repositories/transactions_repository.dart';
 import '../../repositories/user_repository.dart';
 import '../modal_sheet_views/modal_bottom_sheet_view.dart';
 import '../util/card_model.dart';
@@ -14,15 +16,20 @@ import '../util/list_tile_transactions.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
-  late UserRepository _userRepository;
-
+  final GlobalKey _scaffold = GlobalKey();
   final PageController pCardsController = PageController(viewportFraction: 0.9);
 
-  final GlobalKey _scaffold = GlobalKey();
+  late TransactionsRepository _transactionsRepository;
+  late List<Transaction> transactionsReversed;
+
+  //Controller
+  final homeController = HomePageController();
 
   @override
   Widget build(BuildContext context) {
-    _userRepository = context.watch<UserRepository>();
+    _transactionsRepository = context.watch<TransactionsRepository>();
+    transactionsReversed = _transactionsRepository.transactions.reversed.toList();
+
     return Scaffold(
       key: _scaffold,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -55,7 +62,7 @@ class HomePage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text('${_userRepository.user.nickname} ', style: AppTextStyles.homeLabelBold),
+                        Text('${UserRepository.instance.user.nickname} ', style: AppTextStyles.homeLabelBold),
                         Text('Wallet', style: AppTextStyles.homeLabel),
                       ],
                     ),
@@ -79,6 +86,7 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
+
               const SizedBox(height: 10),
               SmoothPageIndicator(
                 controller: pCardsController,
@@ -90,8 +98,7 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 25),
 
-              //buttons
-              //column stats transactions
+              //buttons column stats transactions
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
@@ -109,66 +116,10 @@ class HomePage extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ListView(
+                  child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
-                    children: const [
-                      ListTileTransaction(
-                        title: 'Food',
-                        description: 'Venda da Dona Bahiana',
-                        amount: 15,
-                        iconPath: AppIcons.dinnerIcon,
-                        data: '12/08/22',
-                        isDebit: false,
-                      ),
-                      ListTileTransaction(
-                        title: 'Food',
-                        description: 'Venda da Dona Bahiana',
-                        amount: 24,
-                        iconPath: AppIcons.dinnerIcon,
-                        data: '12/08/22',
-                        isDebit: true,
-                      ),
-                      ListTileTransaction(
-                        title: 'Transport',
-                        description: 'Onibus',
-                        amount: 24,
-                        iconPath: AppIcons.dinnerIcon,
-                        data: '13/08/22',
-                        isDebit: true,
-                      ),
-                      ListTileTransaction(
-                        title: 'Deposit',
-                        description: 'Bank',
-                        amount: 90,
-                        iconPath: AppIcons.dinnerIcon,
-                        data: '13/08/22',
-                        isDebit: false,
-                      ),
-                      ListTileTransaction(
-                        title: 'Deposit',
-                        description: 'Bank',
-                        amount: 90,
-                        iconPath: AppIcons.dinnerIcon,
-                        data: '13/08/22',
-                        isDebit: false,
-                      ),
-                      ListTileTransaction(
-                        title: 'Deposit',
-                        description: 'Bank',
-                        amount: 90,
-                        iconPath: AppIcons.dinnerIcon,
-                        data: '13/08/22',
-                        isDebit: false,
-                      ),
-                      ListTileTransaction(
-                        title: 'Deposit',
-                        description: 'Bank',
-                        amount: 90,
-                        iconPath: AppIcons.dinnerIcon,
-                        data: '13/08/22',
-                        isDebit: false,
-                      ),
-                    ],
+                    itemCount: transactionsReversed.length,
+                    itemBuilder: (context, index) => ListTileTransaction(transaction: transactionsReversed[index]),
                   ),
                 ),
               ),

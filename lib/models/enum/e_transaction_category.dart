@@ -1,4 +1,10 @@
+// ignore_for_file: constant_identifier_names
+
 enum ETransactionCategory {
-  deposit,
-  food,
+  Deposit,
+  Food,
+  Home,
+  Shopping,
+  Transport,
+  Other,
 }

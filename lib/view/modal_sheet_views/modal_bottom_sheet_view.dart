@@ -4,8 +4,9 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_icons.dart';
 import '../util/draggable_incator.dart';
 import '../util/list_tile_function_model.dart';
+import 'modal_pages/debit_page/debit_page.dart';
+import 'modal_pages/deposit_page.dart';
 import 'modal_transaction_sheet_view.dart';
-import 'pages/deposit_page.dart';
 
 modalBottomSheetView(BuildContext context) {
   final BuildContext homeContext = context;
@@ -52,7 +53,12 @@ modalBottomSheetView(BuildContext context) {
                   imagePath: AppIcons.pay,
                   title: 'Debit',
                   subTitle: 'Debit amount from your wallet',
-                  action: null,
+                  action: () => modalTransactionSheetView(
+                    context,
+                    DebitPage(
+                      homeContext: homeContext,
+                    ),
+                  ),
                 ),
               ],
             ),

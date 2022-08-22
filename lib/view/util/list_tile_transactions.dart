@@ -1,51 +1,56 @@
 import 'package:flutter/material.dart';
 
+import '../../controller/universal_controller.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../models/transaction.dart';
 
 class ListTileTransaction extends StatelessWidget {
-  final String iconPath;
-  final String title;
-  final String description;
-  final String data;
-  final double amount;
-  final bool isDebit;
+  final Transaction transaction;
 
-  const ListTileTransaction({
+  ListTileTransaction({
     Key? key,
-    required this.iconPath,
-    required this.title,
-    required this.description,
-    required this.data,
-    required this.amount,
-    required this.isDebit,
+    required this.transaction,
   }) : super(key: key);
+
+  final universalController = UniversalController();
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: CircleAvatar(
-        radius: 25,
-        backgroundColor: AppColors.baseColor200,
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: Image.asset(iconPath),
+      leading: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: CircleAvatar(
+          radius: 25,
+          backgroundColor: AppColors.baseColor200,
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Image.network(transaction.iconPath),
+          ),
         ),
       ),
       title: Row(
         children: [
           //Text('(debit) ', style: AppTextStyles.listTileTitle.copyWith(color: Colors.red)),
-          Text(title, style: AppTextStyles.listTileTransactions),
+          Text(transaction.category, style: AppTextStyles.listTileTransactions),
         ],
       ),
-      subtitle: Text(description, style: AppTextStyles.listTileTransactions),
+      subtitle: Text(
+        transaction.description!,
+        style: AppTextStyles.listTileSubtitle,
+        overflow: TextOverflow.ellipsis,
+      ),
       trailing: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(data, style: AppTextStyles.listTileTransactionsData),
+          Text(universalController.dateFormat.format(transaction.transactionDate!), style: AppTextStyles.listTileTransactionsData),
+          Text(universalController.hourFormat.format(transaction.transactionDate!), style: AppTextStyles.listTileTransactionsData),
           Text(
-            (isDebit) ? (amount * -1).toString() : amount.toString(),
-            style: (isDebit) ? AppTextStyles.listTileTransactionsValueDebit : AppTextStyles.listTileTransactionsValueCredit,
+            (transaction.type == 'Debit')
+                ? universalController.numberFormatPTBR.format(transaction.amount * -1)
+                : universalController.numberFormatPTBR.format(transaction.amount),
+            style: (transaction.type == 'Debit') ? AppTextStyles.listTileTransactionsValueDebit : AppTextStyles.listTileTransactionsValueCredit,
           ),
         ],
       ),

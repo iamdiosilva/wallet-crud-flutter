@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
+import '../../../controller/login_page_controller.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/theme/app_icons.dart';
 import '../../../core/theme/app_images.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../../../repositories/user_repository.dart';
-import '../../home_page/home_page.dart';
-import '../../util/custom_snackbar.dart';
 
 // ignore: must_be_immutable
 class LoginBody extends StatefulWidget {
+  LoginBody({Key? key}) : super(key: key);
+
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
-  late UserRepository _userRepository;
 
-  LoginBody({Key? key}) : super(key: key);
+  final loginController = LoginPageController();
 
   @override
   State<LoginBody> createState() => _LoginBodyState();
@@ -25,7 +22,6 @@ class _LoginBodyState extends State<LoginBody> {
   bool rememberMe = false;
   @override
   Widget build(BuildContext context) {
-    widget._userRepository = context.watch<UserRepository>();
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Container(
@@ -173,7 +169,11 @@ class _LoginBodyState extends State<LoginBody> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      onPressed: () async => await _checkUser(widget._userController.text, widget._passController.text, context),
+                      onPressed: () async => await widget.loginController.checkUser(
+                        context: context,
+                        userName: widget._userController.text,
+                        password: widget._passController.text,
+                      ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         child: Text(
@@ -191,62 +191,5 @@ class _LoginBodyState extends State<LoginBody> {
         ),
       ),
     );
-  }
-
-  //check if user is valid and login
-  _checkUser(String userName, String password, BuildContext context) async {
-    showCustomSnackbar(
-      scaffoldContext: context,
-      color: AppColors.warning,
-      durationMilliseconds: 3000,
-      title: 'Requesting server',
-      subtitle: 'Comunicating with server',
-      trailingImagePath: AppIcons.warning,
-    );
-
-    final response = await widget._userRepository.searchUser(widget._userController.text);
-    await Future.delayed(const Duration(milliseconds: 1000));
-
-    if (response.status == 500) {
-      showCustomSnackbarReplace(
-        scaffoldContext: context,
-        color: AppColors.error,
-        durationMilliseconds: 3000,
-        title: 'Comunication error',
-        subtitle: 'Something went wrong',
-        trailingImagePath: AppIcons.wrong,
-      );
-    } else if (response.status == 200) {
-      if (widget._userRepository.user.userName == userName && widget._userRepository.user.userPassword == password) {
-        showCustomSnackbarReplace(
-          scaffoldContext: context,
-          color: AppColors.success,
-          durationMilliseconds: 3000,
-          title: 'Login Successful',
-          subtitle: 'Welcome ${widget._userRepository.user.nickname}!',
-          trailingImagePath: AppIcons.check,
-        );
-        // ignore: use_build_context_synchronously
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
-      } else {
-        showCustomSnackbarReplace(
-          scaffoldContext: context,
-          color: AppColors.error,
-          durationMilliseconds: 3000,
-          title: 'Login error',
-          subtitle: 'User or password is incorrect',
-          trailingImagePath: AppIcons.wrong,
-        );
-      }
-    } else if (response.status == 406) {
-      showCustomSnackbarReplace(
-        scaffoldContext: context,
-        color: AppColors.error,
-        durationMilliseconds: 3000,
-        title: 'Login error',
-        subtitle: 'User or password is incorrect',
-        trailingImagePath: AppIcons.wrong,
-      );
-    }
   }
 }

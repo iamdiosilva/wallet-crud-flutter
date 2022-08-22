@@ -79,7 +79,7 @@ showCustomSnackbar({
   );
 }
 
-showCustomSnackbarReplace({
+showCustomSnackbarReplacement({
   required BuildContext scaffoldContext,
   required Color color,
   required int durationMilliseconds,

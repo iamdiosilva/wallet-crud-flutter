@@ -14,7 +14,7 @@ class AppTextStyles {
   static TextStyle listTileSubtitle = const TextStyle(fontSize: 12, color: Colors.white54);
 
   static TextStyle listTileTransactions = const TextStyle(color: Colors.white);
-  static TextStyle listTileTransactionsData = const TextStyle(color: Colors.white, fontSize: 12);
+  static TextStyle listTileTransactionsData = const TextStyle(color: Colors.white54, fontSize: 12);
   static TextStyle listTileTransactionsValueCredit = const TextStyle(color: Color(0xff2BC48A), fontSize: 16);
   static TextStyle listTileTransactionsValueDebit = const TextStyle(color: Colors.red, fontSize: 16);
 
