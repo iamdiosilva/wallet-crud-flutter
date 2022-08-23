@@ -74,14 +74,17 @@ class HomePage extends StatelessWidget {
 
               //cards
               SizedBox(
-                height: 200,
+                height: MediaQuery.of(context).size.height * 0.25,
                 child: PageView(
                   controller: pCardsController,
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   children: const [
                     CardModel(
-                      color: Colors.red,
+                      color: Colors.teal,
+                    ),
+                    CardModel(
+                      color: Colors.purple,
                     ),
                   ],
                 ),
@@ -90,7 +93,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 10),
               SmoothPageIndicator(
                 controller: pCardsController,
-                count: 1,
+                count: 2,
                 effect: ExpandingDotsEffect(
                   dotColor: AppColors.baseColor300,
                   activeDotColor: AppColors.baseColor200,

@@ -50,7 +50,6 @@ class _DebitPageState extends State<DebitPage> {
                   child: TextFormField(
                     controller: _amountController,
                     keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.attach_money,

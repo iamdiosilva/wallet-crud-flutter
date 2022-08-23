@@ -11,7 +11,7 @@ class CardModel extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        width: 300,
+        height: MediaQuery.of(context).size.height * 0.25,
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
           color: color,
@@ -36,7 +36,7 @@ class CardModel extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Final 1234',
+                  'Final 123',
                   style: AppTextStyles.cardText,
                 ),
                 Text(

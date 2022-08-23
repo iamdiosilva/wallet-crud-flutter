@@ -18,15 +18,15 @@ class ListTileTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(25),
-        child: CircleAvatar(
-          radius: 25,
-          backgroundColor: AppColors.baseColor200,
-          child: Padding(
-            padding: const EdgeInsets.all(4),
-            child: Image.network(transaction.iconPath),
-          ),
+      leading: Container(
+        width: 50,
+        decoration: BoxDecoration(
+          color: AppColors.baseColor300,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4),
+          child: Image.network(transaction.iconPath),
         ),
       ),
       title: Row(
@@ -48,7 +48,7 @@ class ListTileTransaction extends StatelessWidget {
           Text(universalController.hourFormat.format(transaction.transactionDate!), style: AppTextStyles.listTileTransactionsData),
           Text(
             (transaction.type == 'Debit')
-                ? universalController.numberFormatPTBR.format(transaction.amount * -1)
+                ? universalController.numberFormatPTBR.format(transaction.amount)
                 : universalController.numberFormatPTBR.format(transaction.amount),
             style: (transaction.type == 'Debit') ? AppTextStyles.listTileTransactionsValueDebit : AppTextStyles.listTileTransactionsValueCredit,
           ),

@@ -36,28 +36,33 @@ class _CustomDropDownButtonState extends State<CustomDropDownButton> {
           width: 20,
           color: AppColors.white38,
         ),
+        iconOnClick: SvgPicture.asset(
+          AppIcons.svgArrowUp,
+          width: 20,
+          color: AppColors.white38,
+        ),
         value: widget.selectedItem,
         items: widget.items
             .map((item) => DropdownMenuItem<String>(
                   value: item,
                   child: Text(
                     item,
-                    style: AppTextStyles.textFormLabel,
+                    style: AppTextStyles.textDropDownMenu,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ))
             .toList(),
         onChanged: widget.onChanged(),
         buttonDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15)),
           border: Border.all(
             color: AppColors.white38,
             width: 2,
           ),
         ),
         dropdownDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: AppColors.baseColor200,
+          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+          color: AppColors.baseColor300,
         ),
         buttonHeight: 60,
         buttonWidth: 160,

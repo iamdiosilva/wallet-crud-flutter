@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 import '../../../models/transaction.dart';
 import 'confirmation_alert_dialog.dart';
 
-confirmationAlert({
-  required BuildContext homeContext,
-  required Transaction transaction,
-}) {
+confirmationAlert({required BuildContext homeContext, required Transaction transaction}) {
   showDialog(
     context: homeContext,
     builder: (context) => ScaffoldMessenger(

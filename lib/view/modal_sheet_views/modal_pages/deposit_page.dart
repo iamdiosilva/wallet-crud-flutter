@@ -42,7 +42,6 @@ class DepositPage extends StatelessWidget {
             child: TextFormField(
               controller: _amountController,
               keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 prefixIcon: Icon(
                   Icons.attach_money,

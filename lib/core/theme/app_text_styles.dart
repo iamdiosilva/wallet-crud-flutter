@@ -26,4 +26,6 @@ class AppTextStyles {
   static TextStyle alertDialogTitle = const TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.white);
   static TextStyle alertDialogContent = const TextStyle(fontSize: 14, color: Colors.white54);
   static TextStyle alertDialogTextButton = const TextStyle(color: Colors.white);
+
+  static TextStyle textDropDownMenu = const TextStyle(color: Colors.white70, fontSize: 16);
 }
