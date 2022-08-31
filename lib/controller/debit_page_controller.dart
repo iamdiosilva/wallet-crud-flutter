@@ -11,12 +11,19 @@ class DebitPageController {
       ETransactionCategory.Transport.name,
       ETransactionCategory.Snackbar.name,
       ETransactionCategory.Restaurant.name,
+      ETransactionCategory.Health.name,
+      ETransactionCategory.Dentist.name,
+      ETransactionCategory.Fuel.name,
       ETransactionCategory.Rent.name,
+      ETransactionCategory.Gym.name,
+      ETransactionCategory.Hygiene.name,
       ETransactionCategory.Home.name,
       ETransactionCategory.Shopping.name,
       ETransactionCategory.Other.name,
       ETransactionCategory.Internet.name,
       ETransactionCategory.Light.name,
+      ETransactionCategory.Phone.name,
+      ETransactionCategory.Market.name,
     ]..sort();
   }
 
@@ -32,6 +39,13 @@ class DebitPageController {
     if (category == ETransactionCategory.Rent.name) appIcon = AppIcons.httpRent;
     if (category == ETransactionCategory.Internet.name) appIcon = AppIcons.httpModem;
     if (category == ETransactionCategory.Light.name) appIcon = AppIcons.httpEletrical;
+    if (category == ETransactionCategory.Health.name) appIcon = AppIcons.httpFirstAid;
+    if (category == ETransactionCategory.Dentist.name) appIcon = AppIcons.httpDentist;
+    if (category == ETransactionCategory.Phone.name) appIcon = AppIcons.httpPhone;
+    if (category == ETransactionCategory.Fuel.name) appIcon = AppIcons.httpGasStation;
+    if (category == ETransactionCategory.Gym.name) appIcon = AppIcons.httpGym;
+    if (category == ETransactionCategory.Market.name) appIcon = AppIcons.httpTrolley;
+    if (category == ETransactionCategory.Hygiene.name) appIcon = AppIcons.httpHygiene;
 
     return Transaction(
       userId: UserRepository.instance.user.id,

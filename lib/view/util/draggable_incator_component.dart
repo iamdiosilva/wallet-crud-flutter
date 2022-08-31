@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../core/theme/app_colors.dart';
 
-class DraggableIndicator extends StatelessWidget {
-  const DraggableIndicator({Key? key}) : super(key: key);
+class DraggableIndicatorComponent extends StatelessWidget {
+  const DraggableIndicatorComponent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_icons.dart';
-import '../util/draggable_incator.dart';
+import '../util/draggable_incator_component.dart';
 import '../util/list_tile_function_model.dart';
 import 'modal_pages/debit_page/debit_page.dart';
 import 'modal_pages/deposit_page.dart';
@@ -36,7 +36,7 @@ modalBottomSheetView(BuildContext context) {
             child: Column(
               children: [
                 const SizedBox(height: 5),
-                const DraggableIndicator(),
+                const DraggableIndicatorComponent(),
                 const SizedBox(height: 10),
                 ListTileFunctionModel(
                   imagePath: AppIcons.deposit,

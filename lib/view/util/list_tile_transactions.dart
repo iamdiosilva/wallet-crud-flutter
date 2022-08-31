@@ -44,13 +44,23 @@ class ListTileTransaction extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(universalController.dateFormat.format(transaction.transactionDate!), style: AppTextStyles.listTileTransactionsData),
-          Text(universalController.hourFormat.format(transaction.transactionDate!), style: AppTextStyles.listTileTransactionsData),
+          Text(
+              universalController.hourFormat
+                  .format(transaction.transactionDate!),
+              style: AppTextStyles.listTileTransactionsData),
+          Text(
+              universalController.dateFormat
+                  .format(transaction.transactionDate!),
+              style: AppTextStyles.listTileTransactionsData),
           Text(
             (transaction.type == 'Debit')
-                ? universalController.numberFormatPTBR.format(transaction.amount)
-                : universalController.numberFormatPTBR.format(transaction.amount),
-            style: (transaction.type == 'Debit') ? AppTextStyles.listTileTransactionsValueDebit : AppTextStyles.listTileTransactionsValueCredit,
+                ? universalController.numberFormatPTBR
+                    .format(transaction.amount)
+                : universalController.numberFormatPTBR
+                    .format(transaction.amount),
+            style: (transaction.type == 'Debit')
+                ? AppTextStyles.listTileTransactionsValueDebit
+                : AppTextStyles.listTileTransactionsValueCredit,
           ),
         ],
       ),

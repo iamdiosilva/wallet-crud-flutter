@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/theme/app_colors.dart';
-import '../util/draggable_incator.dart';
+import '../util/draggable_incator_component.dart';
 
 modalTransactionSheetView(BuildContext context, Widget page) {
   Navigator.pop(context);
@@ -18,8 +18,8 @@ modalTransactionSheetView(BuildContext context, Widget page) {
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: DraggableScrollableSheet(
         expand: false,
-        minChildSize: 0.2,
-        initialChildSize: 0.4,
+        minChildSize: 0.4,
+        initialChildSize: 0.5,
         maxChildSize: 0.6,
         builder: (context, scrollController) {
           return NotificationListener<OverscrollIndicatorNotification>(
@@ -32,7 +32,7 @@ modalTransactionSheetView(BuildContext context, Widget page) {
               child: Column(
                 children: [
                   const SizedBox(height: 5),
-                  const DraggableIndicator(),
+                  const DraggableIndicatorComponent(),
                   const SizedBox(height: 10),
                   page,
                 ],

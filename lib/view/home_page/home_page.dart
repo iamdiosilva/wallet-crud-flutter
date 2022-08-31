@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:square_percent_indicater/square_percent_indicater.dart';
 import 'package:wallet_crud/models/transaction.dart';
+import 'package:wallet_crud/view/util/filter_date_component.dart';
 
 import '../../controller/home_page_controller.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_text_styles.dart';
+import '../../repositories/balance_repository.dart';
 import '../../repositories/transactions_repository.dart';
 import '../../repositories/user_repository.dart';
 import '../modal_sheet_views/modal_bottom_sheet_view.dart';
@@ -20,6 +22,7 @@ class HomePage extends StatelessWidget {
   final PageController pCardsController = PageController(viewportFraction: 0.9);
 
   late TransactionsRepository _transactionsRepository;
+  late BalanceRepository _balanceRepository;
   late List<Transaction> transactionsReversed;
 
   //Controller
@@ -28,7 +31,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _transactionsRepository = context.watch<TransactionsRepository>();
-    transactionsReversed = _transactionsRepository.transactions.reversed.toList();
+    _balanceRepository = context.watch<BalanceRepository>();
+    transactionsReversed =
+        _transactionsRepository.transactions.reversed.toList();
 
     return Scaffold(
       key: _scaffold,
@@ -44,7 +49,7 @@ class HomePage extends StatelessWidget {
         child: IconTheme(
           data: IconThemeData(color: AppColors.baseColor),
           child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
+            padding: EdgeInsets.symmetric(vertical: 12),
           ),
         ),
       ),
@@ -52,17 +57,18 @@ class HomePage extends StatelessWidget {
       body: SafeArea(
         //App bar
         child: Padding(
-          padding: const EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 12),
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
-                        Text('${UserRepository.instance.user.nickname} ', style: AppTextStyles.homeLabelBold),
+                        Text('${UserRepository.instance.user.nickname} ',
+                            style: AppTextStyles.homeLabelBold),
                         Text('Wallet', style: AppTextStyles.homeLabel),
                       ],
                     ),
@@ -70,60 +76,71 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 12),
 
-              //cards
+              //card
+              (_balanceRepository.balance == null)
+                  ? SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.25,
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.baseColor200,
+                        ),
+                      ),
+                    )
+                  : SquarePercentIndicator(
+                      height: MediaQuery.of(context).size.height * 0.15,
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      progressColor: Colors.tealAccent,
+                      progress: 0.3,
+                      borderRadius: 15,
+                      child: CardModel(
+                        color: AppColors.baseColor200,
+                        balance: _balanceRepository.balance!,
+                      ),
+                    ),
+              const SizedBox(height: 16),
+
+              //Filter
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.25,
-                child: PageView(
-                  controller: pCardsController,
+                height: MediaQuery.of(context).size.height * 0.04,
+                child: ListView(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
                   children: const [
-                    CardModel(
-                      color: Colors.teal,
-                    ),
-                    CardModel(
-                      color: Colors.purple,
-                    ),
+                    FilterItemComponent(label: 'Today'),
+                    FilterItemComponent(label: 'This week'),
+                    FilterItemComponent(label: 'This month'),
+                    FilterItemComponent(label: 'This year'),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 10),
-              SmoothPageIndicator(
-                controller: pCardsController,
-                count: 2,
-                effect: ExpandingDotsEffect(
-                  dotColor: AppColors.baseColor300,
-                  activeDotColor: AppColors.baseColor200,
-                ),
-              ),
-              const SizedBox(height: 25),
-
-              //buttons column stats transactions
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Weekend Transactions',
-                      style: AppTextStyles.homeTitles,
-                    ),
-                  ],
-                ),
-              ),
+              const SizedBox(height: 16),
 
               //transactions
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    itemCount: transactionsReversed.length,
-                    itemBuilder: (context, index) => ListTileTransaction(transaction: transactionsReversed[index]),
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Text(
+                        'Weekend Transactions',
+                        style: AppTextStyles.homeTitles,
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: transactionsReversed.length,
+                        itemBuilder: (context, index) => ListTileTransaction(
+                            transaction: transactionsReversed[index]),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
