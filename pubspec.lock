@@ -345,6 +345,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.0"
+  widget_loading:
+    dependency: "direct main"
+    description:
+      name: widget_loading
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2"
   xml:
     dependency: transitive
     description:

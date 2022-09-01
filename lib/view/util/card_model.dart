@@ -46,28 +46,7 @@ class _CardModelState extends State<CardModel> {
                     Visibility(
                       visible: _isVisible,
                       replacement: Row(
-                        children: [
-                          Container(
-                            color: Colors.red,
-                            width: 10,
-                            height: 10,
-                          ),
-                          Container(
-                            color: Colors.red,
-                            width: 10,
-                            height: 10,
-                          ),
-                          Container(
-                            color: Colors.red,
-                            width: 10,
-                            height: 10,
-                          ),
-                          Container(
-                            color: Colors.red,
-                            width: 10,
-                            height: 10,
-                          ),
-                        ],
+                        children: [Text('•')],
                       ),
                       child: Text(
                         _universalController.numberFormatPTBR

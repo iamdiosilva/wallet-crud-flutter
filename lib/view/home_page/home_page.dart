@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:square_percent_indicater/square_percent_indicater.dart';
 import 'package:wallet_crud/models/transaction.dart';
 import 'package:wallet_crud/view/util/filter_date_component.dart';
+import 'package:widget_loading/widget_loading.dart';
 
 import '../../controller/home_page_controller.dart';
 import '../../core/theme/app_colors.dart';
@@ -78,15 +79,13 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              //card
               (_balanceRepository.balance == null)
-                  ? SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.25,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: AppColors.baseColor200,
-                        ),
-                      ),
+                  ? WiperLoading(
+                      wiperColor: AppColors.baseColor200,
+                      child: (SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.95,
+                      )),
                     )
                   : SquarePercentIndicator(
                       height: MediaQuery.of(context).size.height * 0.15,
@@ -119,30 +118,38 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 16),
 
               //transactions
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        'Weekend Transactions',
-                        style: AppTextStyles.homeTitles,
-                        textAlign: TextAlign.start,
+              (_transactionsRepository.transactions.isEmpty)
+                  ? Expanded(
+                      child: WiperLoading(
+                          wiperColor: AppColors.baseColor200,
+                          direction: WiperDirection.down,
+                          child: Container()),
+                    )
+                  : Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'Weekend Transactions',
+                              style: AppTextStyles.homeTitles,
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: transactionsReversed.length,
+                              itemBuilder: (context, index) =>
+                                  ListTileTransaction(
+                                      transaction: transactionsReversed[index]),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: transactionsReversed.length,
-                        itemBuilder: (context, index) => ListTileTransaction(
-                            transaction: transactionsReversed[index]),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),

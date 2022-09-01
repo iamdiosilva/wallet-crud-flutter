@@ -15,7 +15,8 @@ class BalanceRepository extends ChangeNotifier {
 
   Future _loadBalanceUser() async {
     SupabaseHandler supabaseHandler = SupabaseHandler();
-    final response = await supabaseHandler.searchUserBalanceHandler(userId: UserRepository.instance.user.id);
+    final response = await supabaseHandler.searchUserBalanceHandler(
+        userId: UserRepository.instance.user.id);
 
     if (response.status == 200) {
       //reponse.data is a Map with the user data decoded from json use directly the data

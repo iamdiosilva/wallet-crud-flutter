@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.17.0
   dropdown_button2: ^1.7.2
   square_percent_indicater: ^0.1.0
+  widget_loading: ^0.3.2
   
 
 
