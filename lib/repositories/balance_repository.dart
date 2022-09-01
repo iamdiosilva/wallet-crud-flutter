@@ -6,8 +6,9 @@ import '../models/balance.dart';
 import 'user_repository.dart';
 
 class BalanceRepository extends ChangeNotifier {
-  Balance? _balance;
-  Balance? get balance => _balance;
+  final List<Balance> _balance = [];
+
+  List get balance => _balance;
 
   BalanceRepository() {
     _loadBalanceUser();
@@ -20,7 +21,8 @@ class BalanceRepository extends ChangeNotifier {
 
     if (response.status == 200) {
       //reponse.data is a Map with the user data decoded from json use directly the data
-      _balance = Balance.fromJson(response.data);
+      Balance amount = Balance.fromJson(response.data);
+      _balance.add(amount);
 
       //static variable userId is used to get the user id from the database
 

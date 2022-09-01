@@ -6,10 +6,12 @@ import '../../core/theme/app_text_styles.dart';
 import '../../models/balance.dart';
 
 class CardModel extends StatefulWidget {
-  final Balance balance;
+  //final Balance? balance;
   final Color? color;
-  const CardModel({Key? key, required this.color, required this.balance})
-      : super(key: key);
+  const CardModel({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
 
   @override
   State<CardModel> createState() => _CardModelState();
@@ -49,8 +51,7 @@ class _CardModelState extends State<CardModel> {
                         children: [Text('•')],
                       ),
                       child: Text(
-                        _universalController.numberFormatPTBR
-                            .format(widget.balance.balance),
+                        _universalController.numberFormatPTBR.format(12),
                         style: AppTextStyles.balanceText,
                       ),
                     ),

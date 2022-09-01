@@ -79,25 +79,21 @@ class HomePage extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              (_balanceRepository.balance == null)
-                  ? WiperLoading(
-                      wiperColor: AppColors.baseColor200,
-                      child: (SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        width: MediaQuery.of(context).size.width * 0.95,
-                      )),
-                    )
-                  : SquarePercentIndicator(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      progressColor: Colors.tealAccent,
-                      progress: 0.3,
-                      borderRadius: 15,
-                      child: CardModel(
-                        color: AppColors.baseColor200,
-                        balance: _balanceRepository.balance!,
-                      ),
-                    ),
+              WiperLoading(
+                loading: _balanceRepository.balance.isEmpty,
+                wiperColor: AppColors.baseColor200,
+                child: SquarePercentIndicator(
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  progressColor: Colors.tealAccent,
+                  progress: 0.3,
+                  borderRadius: 15,
+                  child: CardModel(
+                    color: AppColors.baseColor200,
+                  ),
+                ),
+              ),
+
               const SizedBox(height: 16),
 
               //Filter
@@ -117,39 +113,35 @@ class HomePage extends StatelessWidget {
 
               const SizedBox(height: 16),
 
-              //transactions
-              (_transactionsRepository.transactions.isEmpty)
-                  ? Expanded(
-                      child: WiperLoading(
-                          wiperColor: AppColors.baseColor200,
-                          direction: WiperDirection.down,
-                          child: Container()),
-                    )
-                  : Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              'Weekend Transactions',
-                              style: AppTextStyles.homeTitles,
-                              textAlign: TextAlign.start,
-                            ),
-                          ),
-                          Expanded(
-                            child: ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: transactionsReversed.length,
-                              itemBuilder: (context, index) =>
-                                  ListTileTransaction(
-                                      transaction: transactionsReversed[index]),
-                            ),
-                          ),
-                        ],
+              Expanded(
+                child: WiperLoading(
+                  loading: _transactionsRepository.transactions.isEmpty,
+                  direction: WiperDirection.down,
+                  wiperColor: AppColors.baseColor200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text(
+                          'Weekend Transactions',
+                          style: AppTextStyles.homeTitles,
+                          textAlign: TextAlign.start,
+                        ),
                       ),
-                    ),
+                      Expanded(
+                        child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: transactionsReversed.length,
+                          itemBuilder: (context, index) => ListTileTransaction(
+                              transaction: transactionsReversed[index]),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
