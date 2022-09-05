@@ -16,7 +16,8 @@ class TransactionsRepository extends ChangeNotifier {
 
   Future loadTransactionsUser() async {
     SupabaseHandler supabaseHandler = SupabaseHandler();
-    final response = await supabaseHandler.searchTransactionUserHandler(userId: UserRepository.instance.user.id);
+    final response = await supabaseHandler.searchTransactionUserHandler(
+        userId: UserRepository.instance.user.id);
 
     if (response.status == 200 || response.status == 201) {
       //reponse.data is a Map with the user data decoded from json use directly the data
@@ -24,6 +25,7 @@ class TransactionsRepository extends ChangeNotifier {
       for (var transaction in jsonList) {
         _transactions.add(Transaction.fromJson(transaction));
       }
+      debugPrint(response.status.toString());
     } else {
       debugPrint(response.status.toString());
       debugPrint(response.error.toString());
@@ -43,12 +45,14 @@ class TransactionsRepository extends ChangeNotifier {
       iconPath: transaction.iconPath,
     );
 
-    _refreshTransactions();
+    refreshTransactions();
     return response;
   }
 
-  _refreshTransactions() {
+  refreshTransactions() async {
     _transactions.clear();
-    loadTransactionsUser();
+    notifyListeners();
+
+    await loadTransactionsUser();
   }
 }

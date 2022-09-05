@@ -8,9 +8,11 @@ import '../../models/balance.dart';
 class CardModel extends StatefulWidget {
   //final Balance? balance;
   final Color? color;
+  final Balance? balance;
   const CardModel({
     Key? key,
     required this.color,
+    required this.balance,
   }) : super(key: key);
 
   @override
@@ -48,12 +50,23 @@ class _CardModelState extends State<CardModel> {
                     Visibility(
                       visible: _isVisible,
                       replacement: Row(
-                        children: [Text('•')],
+                        children: [
+                          Text('•'),
+                          Text('•'),
+                          Text('•'),
+                          Text('•'),
+                          Text('•'),
+                          Text('•'),
+                          Text('•'),
+                        ],
                       ),
-                      child: Text(
-                        _universalController.numberFormatPTBR.format(12),
-                        style: AppTextStyles.balanceText,
-                      ),
+                      child: (widget.balance == null)
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              _universalController.numberFormatPTBR
+                                  .format(widget.balance!.balance),
+                              style: AppTextStyles.balanceText,
+                            ),
                     ),
                     const SizedBox(width: 15),
                     (_isVisible)

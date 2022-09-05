@@ -59,90 +59,107 @@ class HomePage extends StatelessWidget {
         //App bar
         child: Padding(
           padding: const EdgeInsets.only(top: 12),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Text('${UserRepository.instance.user.nickname} ',
-                            style: AppTextStyles.homeLabelBold),
-                        Text('Wallet', style: AppTextStyles.homeLabel),
-                      ],
-                    ),
-                    //Add button
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              WiperLoading(
-                loading: _balanceRepository.balance.isEmpty,
-                wiperColor: AppColors.baseColor200,
-                child: SquarePercentIndicator(
-                  height: MediaQuery.of(context).size.height * 0.15,
-                  width: MediaQuery.of(context).size.width * 0.95,
-                  progressColor: Colors.tealAccent,
-                  progress: 0.3,
-                  borderRadius: 15,
-                  child: CardModel(
-                    color: AppColors.baseColor200,
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              //Filter
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.04,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  children: const [
-                    FilterItemComponent(label: 'Today'),
-                    FilterItemComponent(label: 'This week'),
-                    FilterItemComponent(label: 'This month'),
-                    FilterItemComponent(label: 'This year'),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              Expanded(
-                child: WiperLoading(
-                  loading: _transactionsRepository.transactions.isEmpty,
-                  direction: WiperDirection.down,
-                  wiperColor: AppColors.baseColor200,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+          child: RefreshIndicator(
+            backgroundColor: AppColors.baseColor200,
+            color: AppColors.grey07,
+            onRefresh: () async => await _balanceRepository.refreshBalance(),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text(
-                          'Weekend Transactions',
-                          style: AppTextStyles.homeTitles,
-                          textAlign: TextAlign.start,
-                        ),
+                      Row(
+                        children: [
+                          Text('${UserRepository.instance.user.nickname} ',
+                              style: AppTextStyles.homeLabelBold),
+                          Text('Wallet', style: AppTextStyles.homeLabel),
+                        ],
                       ),
-                      Expanded(
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: transactionsReversed.length,
-                          itemBuilder: (context, index) => ListTileTransaction(
-                              transaction: transactionsReversed[index]),
-                        ),
-                      ),
+                      //Add button
                     ],
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 12),
+
+                //Cards
+                WiperLoading(
+                  loading: (_balanceRepository.balance == null),
+                  wiperColor: AppColors.baseColor200,
+                  child: SquarePercentIndicator(
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    progressColor: Colors.tealAccent,
+                    progress: 0.3,
+                    borderRadius: 15,
+                    child: CardModel(
+                      balance: (_balanceRepository.balance == null)
+                          ? null
+                          : _balanceRepository.balance!,
+                      color: AppColors.baseColor200,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                //Filter
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.04,
+                  child: ListView(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    children: const [
+                      FilterItemComponent(label: 'Today'),
+                      FilterItemComponent(label: 'This week'),
+                      FilterItemComponent(label: 'This month'),
+                      FilterItemComponent(label: 'This year'),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                //Transactions
+                Expanded(
+                  child: RefreshIndicator(
+                    backgroundColor: AppColors.baseColor200,
+                    color: AppColors.grey07,
+                    onRefresh: () async =>
+                        await _transactionsRepository.refreshTransactions(),
+                    child: WiperLoading(
+                      loading: _transactionsRepository.transactions.isEmpty,
+                      direction: WiperDirection.down,
+                      wiperColor: AppColors.baseColor200,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              'Weekend Transactions',
+                              style: AppTextStyles.homeTitles,
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: transactionsReversed.length,
+                              itemBuilder: (context, index) =>
+                                  ListTileTransaction(
+                                      transaction: transactionsReversed[index]),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
