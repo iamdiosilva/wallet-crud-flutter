@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../core/theme/app_colors.dart';
 import '../util/draggable_incator_component.dart';
 
-modalTransactionSheetView(BuildContext context, Widget page) {
-  Navigator.pop(context);
+modalTransactionSheetView(
+    {required BuildContext context,
+    required Widget page,
+    required bool popBefore}) {
+  (popBefore) ? Navigator.pop(context) : null;
   return showModalBottomSheet(
     backgroundColor: AppColors.baseColor,
     context: context,
@@ -15,7 +18,8 @@ modalTransactionSheetView(BuildContext context, Widget page) {
       ),
     ),
     builder: (context) => Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: DraggableScrollableSheet(
         expand: false,
         minChildSize: 0.4,

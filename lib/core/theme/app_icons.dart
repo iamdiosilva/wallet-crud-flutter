@@ -14,6 +14,7 @@ class AppIcons {
   static const cashLoss = '${pngIconsPath}cash_loss.png';
   static const pay = '${pngIconsPath}pay.png';
   static const deposit = '${pngIconsPath}deposit.png';
+  static const recibe = '${pngIconsPath}recibe.png';
 
   static const waitingServer = '${pngIconsPath}wating_server.png';
   static const warning = '${pngIconsPath}exclamation.png';

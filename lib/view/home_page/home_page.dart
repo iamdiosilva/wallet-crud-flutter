@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:square_percent_indicater/square_percent_indicater.dart';
 import 'package:wallet_crud/models/transaction.dart';
+import 'package:wallet_crud/view/modal_sheet_views/modal_transaction_sheet_view.dart';
 import 'package:wallet_crud/view/util/filter_date_component.dart';
 import 'package:widget_loading/widget_loading.dart';
 
@@ -12,6 +13,7 @@ import '../../repositories/balance_repository.dart';
 import '../../repositories/transactions_repository.dart';
 import '../../repositories/user_repository.dart';
 import '../modal_sheet_views/modal_bottom_sheet_view.dart';
+import '../modal_sheet_views/modal_pages/extract_page.dart';
 import '../util/card_model.dart';
 import '../util/list_tile_transactions.dart';
 
@@ -56,13 +58,15 @@ class HomePage extends StatelessWidget {
       ),
       backgroundColor: AppColors.baseColor,
       body: SafeArea(
-        //App bar
-        child: Padding(
-          padding: const EdgeInsets.only(top: 12),
-          child: RefreshIndicator(
-            backgroundColor: AppColors.baseColor200,
-            color: AppColors.grey07,
-            onRefresh: () async => await _balanceRepository.refreshBalance(),
+        child: RefreshIndicator(
+          backgroundColor: AppColors.baseColor200,
+          color: AppColors.grey300,
+          onRefresh: () async {
+            await _transactionsRepository.refreshTransactions();
+            await _balanceRepository.refreshBalance();
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12),
             child: Column(
               children: [
                 Padding(
@@ -123,38 +127,40 @@ class HomePage extends StatelessWidget {
 
                 //Transactions
                 Expanded(
-                  child: RefreshIndicator(
-                    backgroundColor: AppColors.baseColor200,
-                    color: AppColors.grey07,
-                    onRefresh: () async =>
-                        await _transactionsRepository.refreshTransactions(),
-                    child: WiperLoading(
-                      loading: _transactionsRepository.transactions.isEmpty,
-                      direction: WiperDirection.down,
-                      wiperColor: AppColors.baseColor200,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              'Weekend Transactions',
-                              style: AppTextStyles.homeTitles,
-                              textAlign: TextAlign.start,
+                  child: WiperLoading(
+                    loading: _transactionsRepository.transactions.isEmpty,
+                    direction: WiperDirection.down,
+                    wiperColor: AppColors.baseColor200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text(
+                            'Weekend Transactions',
+                            style: AppTextStyles.homeTitles,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: transactionsReversed.length,
+                            itemBuilder: (context, index) =>
+                                ListTileTransaction(
+                              transaction: transactionsReversed[index],
+                              onTap: () => modalTransactionSheetView(
+                                context: context,
+                                page: ExtractPage(
+                                  transaction: transactionsReversed[index],
+                                ),
+                                popBefore: false,
+                              ),
                             ),
                           ),
-                          Expanded(
-                            child: ListView.builder(
-                              physics: const BouncingScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: transactionsReversed.length,
-                              itemBuilder: (context, index) =>
-                                  ListTileTransaction(
-                                      transaction: transactionsReversed[index]),
-                            ),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),

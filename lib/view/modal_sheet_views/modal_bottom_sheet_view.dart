@@ -43,10 +43,12 @@ modalBottomSheetView(BuildContext context) {
                   title: 'Deposit',
                   subTitle: 'Add credit to your wallet',
                   action: () => modalTransactionSheetView(
-                      context,
-                      DepositPage(
-                        homeContext: homeContext,
-                      )),
+                    context: context,
+                    page: DepositPage(
+                      homeContext: homeContext,
+                    ),
+                    popBefore: true,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 ListTileFunctionModel(
@@ -54,10 +56,11 @@ modalBottomSheetView(BuildContext context) {
                   title: 'Debit',
                   subTitle: 'Debit amount from your wallet',
                   action: () => modalTransactionSheetView(
-                    context,
-                    DebitPage(
+                    context: context,
+                    page: DebitPage(
                       homeContext: homeContext,
                     ),
+                    popBefore: true,
                   ),
                 ),
               ],

@@ -7,10 +7,12 @@ import '../../models/transaction.dart';
 
 class ListTileTransaction extends StatelessWidget {
   final Transaction transaction;
+  final Function()? onTap;
 
   ListTileTransaction({
     Key? key,
     required this.transaction,
+    this.onTap,
   }) : super(key: key);
 
   final universalController = UniversalController();
@@ -18,6 +20,7 @@ class ListTileTransaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: Container(
         width: 50,
         decoration: BoxDecoration(
